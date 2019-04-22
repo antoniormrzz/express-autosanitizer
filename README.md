@@ -22,7 +22,7 @@ const expAutoSan = require('express-autosanitizer');
 ```
 **important note: if you intend to use it with app.use(), mount the middleware *below* the `express.json()` (or `bodyParser()`) instantiation**
 
-### use middleware everywhere (safe):
+### Use middleware everywhere (safe):
 
   writes sanitized data to req.autosan (req.autosan.body, req.autosan.params, req.autosan.query)
   
@@ -39,7 +39,7 @@ app.post('/', (req, res, next) => {
 });
 ```
 
-### use middleware everywhere (UNSAFE):
+### Use middleware everywhere (UNSAFE):
 
   writes sanitized data to req, mutes req object so it might cause problems.
   p.s: this is to apply sanitization for lazy people like me.
@@ -58,7 +58,7 @@ app.post('/', (req, res, next) => {
 });
 ```
 
-### use middleware for a route (safe):
+### Use middleware for a route (safe):
 
    writes sanitized data to req.autosan (req.autosan.body, req.autosan.params, req.autosan.query)
 
@@ -76,7 +76,7 @@ app.post('/:myParam', expAutoSan.route, (req, res, next) => {
 });
 ```
 
-### use middleware for a route (unsafe):
+### Use middleware for a route (UNSAFE):
 
    writes sanitized data to req (req.body, req.params, req.query)
 
@@ -94,7 +94,7 @@ app.post('/:myParam', expAutoSan.routeUnsafe, (req, res, next) => {
 });
 ```
 
-### use as function (safe):
+### Use as function (safe):
 
 ```javascript
 app.get('/:myParam', (req, res, next) => {
