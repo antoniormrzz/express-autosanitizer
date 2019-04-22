@@ -1,6 +1,6 @@
 {
   "name": "express-autosanitizer",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "automatic sanitization of req body fields, params and query. uses caja. automatically does sanitization and escaping as middleware.",
   "main": "index.js",
   "scripts": {
