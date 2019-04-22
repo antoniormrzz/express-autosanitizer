@@ -34,7 +34,7 @@ app.use(expAutoSan.all);
 
 app.post('/', (req, res, next) => {
   //req is automatically sanitized, as middleware is used for all routes
-  doYourStuff(req.body);
+  doYourStuff(req.autosan.body);
   res.render("pagewithtrusteddata");
 });
 ```
