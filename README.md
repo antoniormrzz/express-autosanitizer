@@ -1,10 +1,10 @@
 # express-autosanitizer
 
-automatic sanitization of req **body fields**, **params** and **query** fields. uses caja. automatically does sanitization and escaping as middleware.
+automatic sanitization of req **body**, **params** and **query** strings. uses caja. automatically does sanitization and escaping as middleware.
 
 makes your life a lot easier.
 
-**important note: do not use the automatic middleware with nested objects or arrays (usually happens with ajax calls and API endpoints), it will crash your server.
+**important note: do not use with large amounts of input, it might overflow. it goes through the fields recursively.
 in that case, use singular sanitization instead.**
 
 ## Install
@@ -20,12 +20,12 @@ npm i -S express-autosanitizer
 ```javascript
 const expAutoSan = require('express-autosanitizer');
 ```
+**important note: if you intend to use it with app.use(), mount the middleware *below* the `express.json()` (or `bodyParser()`) instantiation**
 
+### use middleware everywhere (safe):
 
-### use middleware everywhere (if you don't use nested objects or arrays, good for simple projects using forms only):
-
-**important note: Mount the middleware *below* the `express.json()` (or `bodyParser()`) instantiation**
-
+  writes sanitized data to req.autosan (req.autosan.body, req.autosan.params, req.autosan.query)
+  
 ```javascript
 app.use(express.json());
 
@@ -39,14 +39,36 @@ app.post('/', (req, res, next) => {
 });
 ```
 
-### use middleware for all fields in a route (if you don't use nested objects or arrays in this route, good for html form routes and get routes):
+### use middleware everywhere (UNSAFE):
+
+  writes sanitized data to req, mutes req object so it might cause problems.
+  p.s: this is to apply sanitization for lazy people like me.
+  
+```javascript
+app.use(express.json());
+
+// Mount here
+app.use(expAutoSan.allUnsafe);
+
+//no extra middleware needed
+app.post('/', (req, res, next) => {
+  //req is automatically sanitized, as middleware is used for all routes
+  doYourStuff(req.body);
+  res.render("pagewithtrusteddata");
+});
+```
+
+### use middleware for a route (safe):
+
+   writes sanitized data to req.autosan (req.autosan.body, req.autosan.params, req.autosan.query)
 
 ```javascript
 
-app.get('/:myParam', expAutoSan.route, (req, res, next) => {
-  //req is automatically sanitized, as middleware is used for body, query and params
-  doYourStuff(req.params.myParam);
-  doYourStuff(req.query);
+//use the middleware
+app.post('/:myParam', expAutoSan.route, (req, res, next) => {
+  //req is automatically sanitized, as middleware is used for body, query and params of this route
+  //req is not mutated, results are stored in req.autosan.body, req.autosan.params, req.autosan.query
+  doYourStuff(req.autosan.body);
   .
   .
   .
@@ -54,41 +76,17 @@ app.get('/:myParam', expAutoSan.route, (req, res, next) => {
 });
 ```
 
-### use middleware for a route safely (stores sanitized values in req.*type*.autosanitized):
-```javascript
+### use middleware for a route (unsafe):
 
- assume following json:
-
-    {
-      myString:"unsafe string",
-      nestedObject1:{
-                myNestedString:"unsafe string 2"
-                myNestedArray:[0,1,2]
-              },
-      myArray:["one","two","three"]
-    }
-```
+   writes sanitized data to req (req.body, req.params, req.query)
 
 ```javascript
 
 //use different middleware
-app.post('/:myParam', expAutoSan.routeSafe, (req, res, next) => {
-  //req is automatically sanitized, as middleware is used for body, query and params
-  //req is not mutated, results are stored in params.autosanitized, body.autosanitized and query.autosanitized
-  //for the string fields that are not nested in the object you can use values autosanitized,
-  //sanitize the nested values with singular function
-
-  doYourStuff(req.params.autosanitized.myParam);
-  doYourStuff(req.query.autosanitized);
-  doYourStuff(req.body.autosanitized.myString);
-  
-  //because myNestedString is nested
-  let mySanitizedString=expAutoSan.single(req.body.nestedObject1.myNestedString);
-  doYourStuff(mySanitizedString);
-  
-  //because myArray is an Array
-  let mySanitizedArrayString=expAutoSan.single(req.body.myArray[0]);
-  doYourStuff(mySanitizedArrayString);
+app.post('/:myParam', expAutoSan.routeUnsafe, (req, res, next) => {
+  //req is automatically sanitized, as middleware is used for body, query and params of this route
+  //req IS mutated, results are stored in req.body, req.params, req.query
+  doYourStuff(req.body);
   .
   .
   .
@@ -96,15 +94,14 @@ app.post('/:myParam', expAutoSan.routeSafe, (req, res, next) => {
 });
 ```
 
-### use middleware for a singular field/param/query (don't use with objects/arrays, use with strings):
+### use as function (safe):
 
 ```javascript
-
-//DO NOT use as middleware
-app.get('/:myParam',/*not used,*/ (req, res, next) => {
-  //you can pass any fields you suspect, the field in the req will not be sanitized, use the returned value
-  let mySanitizedParam=expAutoSan.single(req.params.myParam);
-  doYourStuff(mySanitizedParam);
+app.get('/:myParam', (req, res, next) => {
+  //you can pass array/object/string or whatever you want, only string parts will be sanitized
+  //again, do not pass highly-nested structures, this middleware works recursively
+  let mySanitizedData = expAutoSan.sanitizeIt(myDirtyData);
+  doYourStuff(mySanitizedData);
   .
   .
   .
@@ -120,10 +117,7 @@ When you use it on a field or a route, it will remove all script tags, and escap
 ## Caveats
 
 This module uses "sanitizer" module, the sanitization logic is done in that package, review the package yourself.
-
-## Contributors
-
-- Antonio Ramirez <sepehralizade@live.com>
+This package goes over the data recursively, it is your duty to be wise enough not to use data that will crash it, you should be fine for most cases (forms, ajax apps, api etc).
 
 ## License
 
