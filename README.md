@@ -1,3 +1,5 @@
+[![Node version](https://img.shields.io/node/v/[NPM-MODULE-NAME].svg?style=flat)](http://nodejs.org/download/)
+
 # express-autosanitizer
 
 automatic sanitization of req **body**, **params** and **query** strings. uses caja. automatically does sanitization and escaping as middleware.
