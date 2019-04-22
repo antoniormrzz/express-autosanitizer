@@ -1,4 +1,6 @@
-[![Node version](https://img.shields.io/node/v/[NPM-MODULE-NAME].svg?style=flat)](http://nodejs.org/download/)
+[![npm version](https://badge.fury.io/js/express-autosanitizer.svg)](https://badge.fury.io/js/express-autosanitizer)
+[![HitCount](http://hits.dwyl.io/antoniormrzz/express-autosanitizer.svg)](http://hits.dwyl.io/antoniormrzz/express-autosanitizer)
+[![Inline docs](http://inch-ci.org/github/antoniormrzz/express-autosanitizer.svg?branch=master)](http://inch-ci.org/github/antoniormrzz/express-autosanitizer)
 
 # express-autosanitizer
 
