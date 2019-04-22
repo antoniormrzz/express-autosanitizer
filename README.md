@@ -21,10 +21,10 @@ npm i -S express-autosanitizer
 const expAutoSan = require('express-autosanitizer');
 ```
 
-**Mount the middleware *below* the `express.json()` (or `bodyParser()`) instantiation**
-
 
 ### use middleware everywhere (if you don't use nested objects or arrays, good for simple projects using forms only):
+
+**important note: Mount the middleware *below* the `express.json()` (or `bodyParser()`) instantiation**
 
 ```javascript
 app.use(express.json());
@@ -42,10 +42,6 @@ app.post('/', (req, res, next) => {
 ### use middleware for all fields in a route (if you don't use nested objects or arrays in this route, good for html form routes and get routes):
 
 ```javascript
-app.use(express.json());
-
-// DO NOT Mount here
-//app.use(expAutoSan.all);
 
 app.get('/:myParam', expAutoSan.route, (req, res, next) => {
   //req is automatically sanitized, as middleware is used for body, query and params
@@ -74,10 +70,6 @@ app.get('/:myParam', expAutoSan.route, (req, res, next) => {
 ```
 
 ```javascript
-app.use(express.json());
-
-// DO NOT Mount here
-//app.use(expAutoSan.all);
 
 //use different middleware
 app.post('/:myParam', expAutoSan.routeSafe, (req, res, next) => {
@@ -107,10 +99,6 @@ app.post('/:myParam', expAutoSan.routeSafe, (req, res, next) => {
 ### use middleware for a singular field/param/query (don't use with objects/arrays, use with strings):
 
 ```javascript
-app.use(express.json());
-
-// DO NOT Mount here
-//app.use(expAutoSan.all);
 
 //DO NOT use as middleware
 app.get('/:myParam',/*not used,*/ (req, res, next) => {
