@@ -65,7 +65,7 @@ app.post('/', (req, res, next) => {
 ```javascript
 
 //use the middleware
-app.post('/:myParam', expAutoSan.route, (req, res, next) => {
+app.post('/', expAutoSan.route, (req, res, next) => {
   //req is automatically sanitized, as middleware is used for body, query and params of this route
   //req is not mutated, results are stored in req.autosan.body, req.autosan.params, req.autosan.query
   doYourStuff(req.autosan.body);
@@ -83,7 +83,7 @@ app.post('/:myParam', expAutoSan.route, (req, res, next) => {
 ```javascript
 
 //use different middleware
-app.post('/:myParam', expAutoSan.routeUnsafe, (req, res, next) => {
+app.post('/', expAutoSan.routeUnsafe, (req, res, next) => {
   //req is automatically sanitized, as middleware is used for body, query and params of this route
   //req IS mutated, results are stored in req.body, req.params, req.query
   doYourStuff(req.body);
@@ -97,7 +97,7 @@ app.post('/:myParam', expAutoSan.routeUnsafe, (req, res, next) => {
 ### Use as function (safe):
 
 ```javascript
-app.get('/:myParam', (req, res, next) => {
+app.get('/', (req, res, next) => {
   //you can pass array/object/string or whatever you want, only string parts will be sanitized
   //again, do not pass highly-nested structures, this middleware works recursively
   let mySanitizedData = expAutoSan.sanitizeIt(myDirtyData);
