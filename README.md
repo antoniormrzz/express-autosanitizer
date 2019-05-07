@@ -125,4 +125,6 @@ This package goes over the data recursively, it is your duty to be wise enough n
 
 ## License
 
+[![NPM](https://nodei.co/npm/express-autosanitizer.png?downloads=true&downloadRank=true&stars=true)](https://nodei.co/npm/express-autosanitizer/)
+
 Copyright (c) 2019 Antonio Ramirez <sepehralizade@live.com>, MIT License
