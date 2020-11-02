@@ -7,7 +7,7 @@
 
 Automatic sanitization of req **body**, **params** and **query** strings. uses caja. automatically does sanitization and escaping as middleware.
 
-If this does make your life easier, please consider making a donation on my [Patreon](https://www.patreon.com/bePatron?u=44856855)
+If this does make your life easier, please consider making a donation to my [Patreon.](https://www.patreon.com/bePatron?u=44856855)
 
 **important note: do not use with large amounts of input, it might overflow. it goes through the fields recursively.
 in that case, use singular sanitization instead.**
