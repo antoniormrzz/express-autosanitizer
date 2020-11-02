@@ -5,9 +5,9 @@
 
 # express-autosanitizer
 
-automatic sanitization of req **body**, **params** and **query** strings. uses caja. automatically does sanitization and escaping as middleware.
+Automatic sanitization of req **body**, **params** and **query** strings. uses caja. automatically does sanitization and escaping as middleware.
 
-makes your life a lot easier.
+If this does make your life easier, please consider making a donation on my [Patreon](https://www.patreon.com/bePatron?u=44856855)
 
 **important note: do not use with large amounts of input, it might overflow. it goes through the fields recursively.
 in that case, use singular sanitization instead.**
