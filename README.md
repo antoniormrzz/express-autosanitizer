@@ -1,6 +1,7 @@
 [![npm version](https://badge.fury.io/js/express-autosanitizer.svg)](https://badge.fury.io/js/express-autosanitizer)
 [![HitCount](http://hits.dwyl.io/antoniormrzz/express-autosanitizer.svg)](http://hits.dwyl.io/antoniormrzz/express-autosanitizer)
 [![Inline docs](http://inch-ci.org/github/antoniormrzz/express-autosanitizer.svg?branch=master)](http://inch-ci.org/github/antoniormrzz/express-autosanitizer)
+<span class="badge-patreon"><a href="https://patreon.com/antoniormrzz" title="Donate to this project using Patreon"><img src="https://img.shields.io/badge/patreon-donate-yellow.svg" alt="Patreon donate button" /></a></span>
 
 # express-autosanitizer
 
